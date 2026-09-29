@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Friends Included transaction approvals and finance dashboard">
+  <title>Friends Included Finance</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#workspace" aria-label="Friends Included finance home">
+      <span class="brand-mark">FI</span>
+      <span><strong>Friends Included</strong><small>Finance desk</small></span>
+    </a>
+    <div class="identity">
+      <label for="role-select">Demonstration role</label>
+      <select id="role-select" aria-describedby="role-note"></select>
+      <span id="role-note" class="role-note">Permissions are checked on the server.</span>
+    </div>
+  </header>
+
+  <main id="workspace">
+    <section class="overview" aria-labelledby="overview-title">
+      <div>
+        <p class="eyebrow">Operations ledger</p>
+        <h1 id="overview-title">Financial position</h1>
+        <p id="welcome">Loading the latest records…</p>
+      </div>
+      <div class="overview-actions" id="external-links" aria-label="Project links"></div>
+    </section>
+
+    <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+    <div id="fatal" class="fatal" role="alert" hidden>
+      <h2>Connection required</h2>
+      <p id="fatal-message"></p>
+      <p>Use the setup guide in the repository to connect Supabase and the other services.</p>
+    </div>
+
+    <section id="dashboard" class="dashboard" aria-label="Financial dashboard"></section>
+
+    <nav class="tabs" aria-label="Workspace views">
+      <button class="tab active" data-tab="entry" aria-selected="true">New transaction</button>
+      <button class="tab" data-tab="decisions" aria-selected="false">Manager decisions <span id="pending-count" class="count">0</span></button>
+      <button class="tab" data-tab="records" aria-selected="false">Records</button>
+      <button class="tab" data-tab="setup" aria-selected="false">Manager setup</button>
+    </nav>
+
+    <section class="panel tab-panel" data-panel="entry">
+      <div class="panel-heading">
+        <div><p class="eyebrow">Record activity</p><h2>New transaction</h2></div>
+        <p id="entry-guidance">Choose a demonstration role to begin.</p>
+      </div>
+
+      <form id="sale-form" class="form-grid" hidden>
+        <label>Reference<input name="reference" required placeholder="S01" autocomplete="off"></label>
+        <label>Customer<input name="customer" required placeholder="Olivia Rose"></label>
+        <label>Project<select name="project" required><option value="A">A — Respectable Relatives</option><option value="B">B — Drunk University Friends</option></select></label>
+        <label class="span-2">Description<input name="description" required placeholder="Service delivered"></label>
+        <label>Amount (€)<input name="amount" required type="number" min="0.01" step="0.01" placeholder="1000.00"></label>
+        <fieldset class="split span-3"><legend>Proposed commission split</legend>
+          <label>Richard %<input name="richard" required type="number" min="0" max="100" step="0.01" value="50"></label>
+          <label>Anastasia %<input name="anastasia" required type="number" min="0" max="100" step="0.01" value="30"></label>
+          <label>Jean-Claude %<input name="jeanClaude" required type="number" min="0" max="100" step="0.01" value="20"></label>
+        </fieldset>
+        <button class="primary" type="submit">Submit sale</button>
+      </form>
+
+      <form id="expense-form" class="form-grid" hidden>
+        <label>Reference<input name="reference" required placeholder="E01" autocomplete="off"></label>
+        <label>Category<select name="category" required><option>Materials</option><option>Travel</option><option>Other</option></select></label>
+        <label>Amount (€)<input name="amount" required type="number" min="0.01" step="0.01" placeholder="120.00"></label>
+        <label class="span-2">Description<input name="description" required placeholder="What was purchased"></label>
+        <label>Proposed allocation<select name="proposedAllocation" required><option value="A">A — Respectable Relatives</option><option value="B">B — Drunk University Friends</option><option>Company overhead</option></select></label>
+        <button class="primary" type="submit">Submit expense</button>
+      </form>
+
+      <div id="no-entry" class="empty">Svetlana reviews and decides transactions; routine entry is not required.</div>
+    </section>
+
+    <section class="panel tab-panel" data-panel="decisions" hidden>
+      <div class="panel-heading"><div><p class="eyebrow">Svetlana only</p><h2>Pending decisions</h2></div><p>Inspect the original proposal, correct it if needed, then approve.</p></div>
+      <div id="decision-list" class="decision-list"></div>
+    </section>
+
+    <section class="panel tab-panel" data-panel="records" hidden>
+      <div class="panel-heading"><div><p class="eyebrow">Audit trail</p><h2>Transaction records</h2></div><p>Original proposals, decisions, delivery state, and synchronization state.</p></div>
+      <div class="table-wrap"><table><thead><tr><th>Reference</th><th>Transaction</th><th>Amount</th><th>Status</th><th>Sheets</th><th>Telegram</th><th>Actions</th></tr></thead><tbody id="records-body"></tbody></table></div>
+    </section>
+
+    <section class="panel tab-panel" data-panel="setup" hidden>
+      <div class="panel-heading"><div><p class="eyebrow">Identity mapping</p><h2>Telegram setup</h2></div><p>Ask a staff member to start the bot, then link the captured account to an employee.</p></div>
+      <form id="link-form" class="link-form">
+        <label>Observed Telegram account<select name="contact" required></select></label>
+        <label>Employee<select name="employee" required></select></label>
+        <button class="primary" type="submit">Link account</button>
+      </form>
+      <div class="danger-zone">
+        <div><h3>Clear practice transactions</h3><p>Use once before Test 1. This removes all transactions but keeps employees and Telegram links.</p></div>
+        <button id="clear-button" class="danger" type="button">Clear practice data</button>
+      </div>
+    </section>
+  </main>
+
+  <footer><span id="student-name">Student name</span><span>All people and transactions are fictional.</span></footer>
+</body>
+</html>
